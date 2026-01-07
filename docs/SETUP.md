@@ -12,6 +12,10 @@ Native Windows is not supported; use WSL2.
 
 ## Install Nix
 
+If you already have a broken or conflicting Nix install, run
+`./scripts/uninstall-nix.sh --dry-run` to preview what would be removed, then
+`./scripts/uninstall-nix.sh` to wipe it clean before reinstalling.
+
 Check if Nix is installed:
 
 ```bash

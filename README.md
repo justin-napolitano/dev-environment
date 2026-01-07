@@ -33,6 +33,10 @@ cd dev-environment
 cp flake.config.example.nix flake.config.nix
 ```
 
+If you already have a problematic Nix install, run `./scripts/uninstall-nix.sh --dry-run`
+from this repo to see what would be removed, then rerun without `--dry-run` to
+wipe it before reinstalling.
+
 4) Enter a dev shell:
 
 ```bash
