@@ -1,14 +1,18 @@
 let
-  devEnvPath =
-    let env = builtins.getEnv "DEV_ENVIRONMENT_PATH";
-    in if env == "" then "/home/jaybird/repos/dev-environment" else env;
+  defaultDevEnvUrl = "__DEV_ENV_URL__";
+  devEnvPath = builtins.getEnv "DEV_ENVIRONMENT_PATH";
+  devEnvUrlEnv = builtins.getEnv "DEV_ENVIRONMENT_URL";
+  devEnvInput =
+    if devEnvPath != "" then "path:${devEnvPath}"
+    else if devEnvUrlEnv != "" then devEnvUrlEnv
+    else defaultDevEnvUrl;
 in
 {
   description = "Project devcontainer image with Nix overlay";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    dev-environment.url = "path:${devEnvPath}";
+    dev-environment.url = devEnvInput;
   };
 
   outputs = { self, nixpkgs, dev-environment }:

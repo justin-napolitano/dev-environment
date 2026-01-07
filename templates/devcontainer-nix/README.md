@@ -1,14 +1,17 @@
 # Devcontainer Template (Nix Overlay)
 
 This template builds a project image on top of the base image from the
-`dev-environment` repo.
+`dev-environment` repo. You can copy it manually or run
+`scripts/create-devcontainer-project.sh` from the dev-environment repo to scaffold
+an entire starter project automatically.
 
 ## Requirements
 
 - Build the base image once from the dev-environment repo:
   - `./scripts/build-devcontainer.sh dev`
 - Docker and Nix installed on your machine.
- - If your base repo path is different, set `DEV_ENVIRONMENT_PATH`.
+- If you copy the template manually, set `DEV_ENVIRONMENT_PATH` (local path) or
+  `DEV_ENVIRONMENT_URL` (flake URL) so the flake can find the shared repo.
 
 ## Use
 
@@ -18,7 +21,7 @@ This template builds a project image on top of the base image from the
 4) Build the project image:
 
 ```bash
-export DEV_ENVIRONMENT_PATH="/path/to/dev-environment"
+export DEV_ENVIRONMENT_PATH="/path/to/dev-environment" # or DEV_ENVIRONMENT_URL
 ./scripts/build-devcontainer.sh
 ```
 

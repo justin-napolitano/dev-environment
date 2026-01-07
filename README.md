@@ -139,6 +139,14 @@ See `docs/SETUP.md` for installation, configuration, updates, and troubleshootin
 - `templates/devcontainer-nix` for a project-level devcontainer template
 - `templates/project-template-repo` for a ready-to-clone starter repo
 
+## Project devcontainer starter
+
+Run `./scripts/create-devcontainer-project.sh` to scaffold a new repo that
+inherits this toolchain. The script copies the template, injects the
+dev-environment flake reference (prefers the git remote when available), and can
+initialize git. After that, teammates on Windows/WSL only need to clone the new
+repo and reopen it in VS Code within the provided devcontainer.
+
 ## Notes
 
 - `codex` is included if available as a Nix package (tries `openai-codex` then `codex`).

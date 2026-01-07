@@ -34,7 +34,19 @@ If you want project-specific tools, build a project image that layers on top of
 
 ## Project template
 
-There is a template you can copy into any project:
+The easiest way to create a per-project image is to run:
+
+```bash
+./scripts/create-devcontainer-project.sh
+```
+
+The script copies `templates/project-template-repo`, injects the correct
+dev-environment reference (prefers your git remote, falls back to
+`path:/abs/path`), and optionally initializes git. The resulting repo already
+contains `.devcontainer`, the flake, and helper scripts—just push it and tell
+teammates to reopen in container.
+
+If you prefer to copy the template manually, use:
 
 ```
 templates/devcontainer-nix
@@ -43,11 +55,9 @@ templates/devcontainer-nix
 It builds a project image from `dev-environment-dev:latest` and lets you add
 project-specific packages via `nix/overlay.nix`.
 
-If your base repo path is not `/home/jaybird/repos/dev-environment`, set:
-
-```bash
-export DEV_ENVIRONMENT_PATH="/path/to/dev-environment"
-```
+When copying templates manually, set either `DEV_ENVIRONMENT_PATH` (local path)
+or `DEV_ENVIRONMENT_URL` (flake URL such as `github:your-org/dev-environment`)
+before building so the flake can locate the shared toolchain.
 
 ## Template repo
 
