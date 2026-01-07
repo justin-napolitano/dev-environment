@@ -1,0 +1,8 @@
+{
+  "name": "project-dev",
+  "image": "project-dev:latest",
+  "workspaceFolder": "/workspaces/project",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspaces/project,type=bind,consistency=cached"
+  ]
+}

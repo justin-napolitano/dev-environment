@@ -98,6 +98,31 @@
         if builtins.hasAttr profile (toolProfiles pkgs)
         then (toolProfiles pkgs).${profile}
         else builtins.throw "Invalid profile '${profile}'. Use one of: ${builtins.concatStringsSep \", \" (builtins.attrNames (toolProfiles pkgs))}";
+
+      mkDevcontainerImage = pkgs: profile:
+        let
+          tools = mkToolList pkgs profile;
+          imageEnv = pkgs.buildEnv {
+            name = "devcontainer-${profile}-env";
+            paths = tools ++ [ pkgs.bashInteractive pkgs.coreutils pkgs.cacert ];
+          };
+        in
+        pkgs.dockerTools.buildLayeredImage {
+          name = "dev-environment-${profile}";
+          tag = "latest";
+          contents = [ imageEnv ];
+          config = {
+            WorkingDir = "/workspaces/dev-environment";
+            Cmd = [ "bash" ];
+            Env = [
+              "PATH=/bin"
+              "NIX_SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+            ];
+          };
+          extraCommands = ''
+            mkdir -p /workspaces/dev-environment
+          '';
+        };
     in
     {
       devShells = forAllSystems (system:
@@ -114,13 +139,19 @@
       packages = forAllSystems (system:
         let
           pkgs = mkPkgs system;
+          devcontainerPackages = pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
+            devcontainer-bare = mkDevcontainerImage pkgs "bare";
+            devcontainer-server = mkDevcontainerImage pkgs "server";
+            devcontainer-dev = mkDevcontainerImage pkgs "dev";
+            devcontainer = mkDevcontainerImage pkgs config.profile;
+          };
         in
         {
           bare = pkgs.buildEnv { name = "dev-env-bare"; paths = mkToolList pkgs "bare"; };
           server = pkgs.buildEnv { name = "dev-env-server"; paths = mkToolList pkgs "server"; };
           dev = pkgs.buildEnv { name = "dev-env"; paths = mkToolList pkgs "dev"; };
           default = pkgs.buildEnv { name = "dev-env"; paths = mkToolList pkgs "dev"; };
-        });
+        } // devcontainerPackages);
 
       apps = forAllSystems (system:
         let

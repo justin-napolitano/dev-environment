@@ -135,6 +135,9 @@ See `docs/SETUP.md` for installation, configuration, updates, and troubleshootin
 - `docs/UNINSTALL.md` for removing Nix from a machine
 - `docs/SECRETS.md` for managing `.env` files and encrypted secrets
 - `docs/SCRIPTS.md` for wiring script repos into the toolchain
+- `docs/DEVCONTAINER.md` for building a VS Code devcontainer image
+- `templates/devcontainer-nix` for a project-level devcontainer template
+- `templates/project-template-repo` for a ready-to-clone starter repo
 
 ## Notes
 
