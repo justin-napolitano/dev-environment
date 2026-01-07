@@ -137,3 +137,11 @@ Edit `flake.nix` and update the `toolProfiles` list to add or remove packages. T
 - `experimental-features` error: ensure flakes are enabled in `~/.config/nix/nix.conf`.
 - `codex` missing: the package might not exist in your nixpkgs version.
 - Docker installed but not running: start your Docker daemon separately (Docker Desktop or system service).
+
+## Getting help / maintenance
+
+- Check Nix health: `nix doctor` and review the reported issues.
+- Clean the store: `nix-collect-garbage -d` (removes old generations).
+- Reapply the config: `nix run .#home-switch` (Linux/WSL) or `nix run .#darwin-switch` (macOS).
+- Inspect current profile: `nix profile list`.
+- If things are still broken, run `./scripts/uninstall-nix.sh --dry-run`, then rerun without `--dry-run` to wipe and start over.

@@ -155,3 +155,10 @@ repo and reopen it in VS Code within the provided devcontainer.
 
 - `codex` is included if available as a Nix package (tries `openai-codex` then `codex`).
 - Docker is installed as a CLI package; services are not enabled by default.
+
+## Getting help
+
+- `nix doctor` to verify the installer’s health report.
+- `nix run .#home-switch` / `nix run .#darwin-switch` to reapply configs.
+- `nix-collect-garbage -d` to prune old store generations.
+- `./scripts/uninstall-nix.sh --dry-run` if you suspect the install is beyond repair.
